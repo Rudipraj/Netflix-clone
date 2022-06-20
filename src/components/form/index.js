@@ -23,7 +23,7 @@ Form.Text = function FormText ({children, ...restProps}){
     return <Text {...restProps}>{children}</Text>
 }
 
-Form.TextSmall = function TextSmall ({children, ...restProps}){
+Form.TextSmall = function FormTextSmall ({children, ...restProps}){
     return <TextSmall {...restProps}>{children}</TextSmall>
 }
 
