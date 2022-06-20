@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FirebaseContext } from '../context/firebase'
 import { HeaderContainer } from '../containers/header'
 import { FooterContainer } from '../containers/footer'
 import { Form } from '../components';
+import * as ROUTES from '../constants/routes'
 
 export default function Signin(){
-
+    const navigate = useNavigate();
+    const { firebase } = useContext(FirebaseContext);
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -16,6 +20,20 @@ export default function Signin(){
     const handleSignin = (event) => {
         event.preventDefault();
     }
+
+    //firebase
+
+    firebase.auth()
+    .signInWithEmailAndPassword(emailAddress, password)
+    .then(() => {
+        //push to browse page
+        navigate(ROUTES.BROWSE)
+    })
+    .catch((error) => {
+        setEmailAddress('');
+        setPassword('');
+        setError(error.message);
+    })
 
 
     return (
@@ -43,9 +61,9 @@ export default function Signin(){
                     <Form.Submit 
                         disbaled = {isInvalid}
                         type = "submit"
-                        onChange= {({target}) => setPassword(target.value)}
+                        data-testid="sign-in"
                         >
-                        Sign In
+                        Sign Up
                     </Form.Submit>
                 </Form.Base>
 
